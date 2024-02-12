@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TestCase" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="648,1707" sap2010:WorkflowViewState.IdRef="TestCase_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ra="clr-namespace:ReporterForUiPath.Activities;assembly=ReporterForUiPath.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="TestCase" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="648,1707" sap2010:WorkflowViewState.IdRef="TestCase_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ra="clr-namespace:ReporterForUiPath.Activities;assembly=ReporterForUiPath.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ss="clr-namespace:System.Security;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -30,6 +30,7 @@
       <x:String>ReporterForUiPath.Activities</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>ReporterForUiPath.Enums</x:String>
+      <x:String>System.Security</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -75,6 +76,7 @@
       <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>ReporterForUiPath</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="TestCase" sap:VirtualizedContainerService.HintSize="512,1642" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -83,6 +85,8 @@
       <Variable x:TypeArguments="x:String" Name="str_SuiteID" />
       <Variable x:TypeArguments="x:String" Name="int_testID" />
       <Variable x:TypeArguments="x:Boolean" Name="bol_LoginCompleted" />
+      <Variable x:TypeArguments="ss:SecureString" Name="password1" />
+      <Variable x:TypeArguments="x:String" Name="UserName" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -90,9 +94,6 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="450,830" sap2010:WorkflowViewState.IdRef="Sequence_2">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="UserName" />
-      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -101,11 +102,7 @@
       <ra:CreateReport ContinueOnError="{x:Null}" DisplayName="Create Report" sap:VirtualizedContainerService.HintSize="388,133" sap2010:WorkflowViewState.IdRef="CreateReport_1" ReportLocation="[System.Environment.CurrentDirectory+&quot;\Reports&quot;]" ReportName="SwagLabs" isCreated="[int_repid]" />
       <ra:StartSuite ContinueOnError="{x:Null}" DisplayName="Start Suite" sap:VirtualizedContainerService.HintSize="388,85" sap2010:WorkflowViewState.IdRef="StartSuite_1" ReportId="[int_repid]" SuiteName="Verify login" suiteId="[str_SuiteID]" />
       <ra:StartTest ContinueOnError="{x:Null}" TagName="{x:Null}" TestDescription="{x:Null}" DisplayName="Start Test" sap:VirtualizedContainerService.HintSize="388,85" sap2010:WorkflowViewState.IdRef="StartTest_1" Priority="Low" ReportId="[int_repid]" SuiteId="[str_SuiteID]" TestName="TC01_Login_VerifySauceDemo" testId="[int_testID]" />
-      <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="UserName" CacheStrategy="None" DisplayName="Get Asset" FolderPath="Nipunta_Orchestrator" sap:VirtualizedContainerService.HintSize="388,143" sap2010:WorkflowViewState.IdRef="GetRobotAsset_1">
-        <ui:GetRobotAsset.Value>
-          <OutArgument x:TypeArguments="x:String">[UserName]</OutArgument>
-        </ui:GetRobotAsset.Value>
-      </ui:GetRobotAsset>
+      <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="Sauce.com_login" CacheStrategy="None" DisplayName="Get Credential" FolderPath="Nipunta_Orchestrator" sap:VirtualizedContainerService.HintSize="388,143" sap2010:WorkflowViewState.IdRef="GetRobotCredential_1" Password="[password1]" Username="[UserName]" />
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TestFramework\SetUp.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="TestFramework\SetUp.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <scg:Dictionary x:TypeArguments="x:String, Argument" />
@@ -120,11 +117,21 @@
       </sap:WorkflowViewStateService.ViewState>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="BusinessComponents\Business Components.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="BusinessComponents\Business Components.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="x:String" x:Key="str_Username">standard_user</InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="Str_Password">secret_sauce</InArgument>
-          <OutArgument x:TypeArguments="x:Boolean" x:Key="bol_LoginCompleted">[bol_LoginCompleted]</OutArgument>
-          <InArgument x:TypeArguments="x:Int32" x:Key="int_repID">[int_repid]</InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="str_testID">[int_testID]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="str_Username">
+            <Literal x:TypeArguments="x:String">standard_user</Literal>
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="Str_Password">
+            <Literal x:TypeArguments="x:String">secret_sauce</Literal>
+          </InArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="bol_LoginCompleted">
+            <VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="bol_LoginCompleted" />
+          </OutArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="int_repID">
+            <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="int_repid" />
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="str_testID">
+            <VisualBasicValue x:TypeArguments="x:String" ExpressionText="int_testID" />
+          </InArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
